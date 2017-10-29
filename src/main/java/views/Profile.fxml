@@ -23,7 +23,7 @@
          <children>
             <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" VBox.vgrow="NEVER">
                <image>
-                  <Image url="@../icons/background.png" />
+                  <Image url="@../ressources/Profile.png" />
                </image>
             </ImageView>
             <Label fx:id="lblName" alignment="CENTER" maxWidth="1.7976931348623157E308" minHeight="50.0" text="Logged Username" textFill="#00718a" VBox.vgrow="ALWAYS">
