@@ -18,6 +18,7 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
 import application.Main;
+import delegate.UserServiceDelegate;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -60,34 +61,26 @@ public class LoginController implements Initializable {
 	@FXML
 	private void onActionBT(ActionEvent event) {
 
-		try {
-			Context context = new InitialContext();
-			UserServiceRemote userService = (UserServiceRemote) context
-					.lookup("iski-ear/iski-ejb/UserService!tn.esprit.blizzard.services.interfaces.UserServiceRemote");
-			System.out.println("JNDI OK");
+		System.out.println("JNDI OK");
 
-			User u = new User();
-			u = userService.findByEmail(txt_username.getText());
-			if (u == null) {
-				System.out.println("bara eb3ed");
+		User u = new User();
+		u = UserServiceDelegate.findByEmail(txt_username.getText());
+		if (u == null) {
+			System.out.println("bara eb3ed");
 
-			} else {
-				System.out.println("User password from DB : " + u.getPassword());
-				if (txt_password.getText().equals(u.getPassword())) {
-					Main.setLoggedUser(u);
-					if (u.getUserType().equals("admin")) {
-						this.goToAdminPanel(event);
-					} else {
-						this.goToHome(event);
-					}
+		} else {
+			System.out.println("User password from DB : " + u.getPassword());
+			if (txt_password.getText().equals(u.getPassword())) {
+				Main.setLoggedUser(u);
+				if (u.getUserType().equals("admin")) {
+					this.goToAdminPanel(event);
 				} else {
-					System.out.println("tyh ma 9olna rou7");
+					this.goToHome(event);
 				}
-
+			} else {
+				System.out.println("tyh ma 9olna rou7");
 			}
-		} catch (NamingException e) {
-			System.out.println("JNDI NOT OK");
-			e.printStackTrace();
+
 		}
 
 	}

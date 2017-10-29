@@ -21,6 +21,7 @@ import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
+import delegate.UserServiceDelegate;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -79,10 +80,7 @@ public class RegisterController implements Initializable {
 
 		System.out.println("Perform register action from service");
 
-		try {
-			Context context = new InitialContext();
-			UserServiceRemote userService = (UserServiceRemote) context
-					.lookup("iski-ear/iski-ejb/UserService!tn.esprit.blizzard.services.interfaces.UserServiceRemote");
+		
 			System.out.println("JNDI OK");
 
 			User u = new User();
@@ -100,7 +98,7 @@ public class RegisterController implements Initializable {
 			}
 			u.setUserType("default");
 
-			u = userService.add(u);
+			UserServiceDelegate.addUser(u);
 			
 			
 			Notifications notbuilder = Notifications.create();
@@ -115,10 +113,7 @@ public class RegisterController implements Initializable {
 			System.out.println("User added sucessfully " + u.getFirstName() + " with id = " + u.getIdUser());
 			this.onGoToLogin(event);
 
-		} catch (NamingException e) {
-			System.out.println("JNDI NOT OK");
-			e.printStackTrace();
-		}
+	
 
 	}
 	

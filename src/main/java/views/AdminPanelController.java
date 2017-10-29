@@ -8,14 +8,15 @@ package views;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import org.controlsfx.control.Notifications;
 
 import com.jfoenix.controls.JFXButton;
 
+import application.Main;
+import delegate.OrganizerRequestServiceDelegate;
+import delegate.UserServiceDelegate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -33,8 +34,6 @@ import javafx.util.Callback;
 import javafx.util.Duration;
 import tn.esprit.blizzard.iski.entities.OrganizerRequest;
 import tn.esprit.blizzard.iski.entities.User;
-import tn.esprit.blizzard.services.interfaces.OrganizerRequestServiceRemote;
-import tn.esprit.blizzard.services.interfaces.UserServiceRemote;
 
 /**
  * FXML Controller class
@@ -43,13 +42,7 @@ import tn.esprit.blizzard.services.interfaces.UserServiceRemote;
  */
 public class AdminPanelController implements Initializable {
 
-	Context context;
-	UserServiceRemote userService;
 	private ObservableList<User> userList;
-
-	private OrganizerRequestServiceRemote organizerRequestService;
-	private ObservableList<OrganizerRequest> organizerRequestList;
-
 	@FXML
 	private Label lblMenu;
 	@FXML
@@ -92,6 +85,7 @@ public class AdminPanelController implements Initializable {
 	private Tab TabOrganizerRequest;
 	@FXML
 	private TableColumn<User, String> tcType;
+	private ObservableList<OrganizerRequest> organizerRequestList;
 
 	/**
 	 * Initializes the controller class.
@@ -110,7 +104,7 @@ public class AdminPanelController implements Initializable {
 		this.tcStatus.setCellValueFactory(new PropertyValueFactory<OrganizerRequest, Integer>("status"));
 		this.tcCV.setCellValueFactory(new PropertyValueFactory<OrganizerRequest, String>("cv"));
 
-		 tcRActions.setCellValueFactory(new PropertyValueFactory<>("DMY"));
+		tcRActions.setCellValueFactory(new PropertyValueFactory<>("DMY"));
 
 		Callback<TableColumn<OrganizerRequest, String>, TableCell<OrganizerRequest, String>> cellFactory = //
 				new Callback<TableColumn<OrganizerRequest, String>, TableCell<OrganizerRequest, String>>() {
@@ -119,10 +113,13 @@ public class AdminPanelController implements Initializable {
 						final TableCell<OrganizerRequest, String> cell = new TableCell<OrganizerRequest, String>() {
 							final ImageView iv = new ImageView("ressources/if_ban_icon.png");
 							final ImageView iv1 = new ImageView("ressources/if_accept_103286.png");
-							//HBOX hb = new HBox(btnAccept,btnDecline)
-							final JFXButton btnAccept = new JFXButton("", iv1);
-							
-							final JFXButton btnDecline = new JFXButton("", iv);
+
+							JFXButton btnAccept = new JFXButton("", iv1);
+
+							JFXButton btnDecline = new JFXButton("", iv);
+
+							HBox hb = new HBox(btnAccept, btnDecline);
+
 							@Override
 							public void updateItem(String item, boolean empty) {
 								super.updateItem(item, empty);
@@ -133,34 +130,41 @@ public class AdminPanelController implements Initializable {
 									btnAccept.setOnAction(event -> {
 										OrganizerRequest req = getTableView().getItems().get(getIndex());
 										req.setStatus("Accepted");
-										organizerRequestService.update(req);
-										
+										OrganizerRequestServiceDelegate.update(req);
+
+										req.getUser().setUserType("organizer");
+										UserServiceDelegate.updateUser(req.getUser());
+										Notifications notbuilder = Notifications.create();
+										notbuilder.title(req.getUser().getFirstName()+" "+ req.getUser().getLastName() + "Approved to  organizer ");
+										notbuilder.graphic(null);
+										notbuilder.hideAfter(Duration.seconds(7));
+										notbuilder.position(Pos.BOTTOM_RIGHT);
+										notbuilder.showConfirm();
+										initUserTab();
 										initOrganizeRequestTab();
-										
+
 									});
-									
-									btnAccept.setVisible(true);
-									
+
 									btnDecline.setOnAction(event -> {
 										OrganizerRequest req = getTableView().getItems().get(getIndex());
 										req.setStatus("Declined");
-										organizerRequestService.update(req);
+										OrganizerRequestServiceDelegate.update(req);
 										initOrganizeRequestTab();
-										
+
 									});
-									
-									setGraphic(btnDecline);
+
+									setGraphic(hb);
+									// setGraphic(btnDecline);
 									setText(null);
 								}
 							}
-							
-							
+
 						};
 						return cell;
 					}
 				};
 
-		 tcRActions.setCellFactory(cellFactory);
+		tcRActions.setCellFactory(cellFactory);
 		try {
 			organizerRequestList = this.LoadOrganizerRequestList();
 			tvRequest.setItems(organizerRequestList);
@@ -190,30 +194,13 @@ public class AdminPanelController implements Initializable {
 					@Override
 					public TableCell call(final TableColumn<User, String> param) {
 						final TableCell<User, String> cell = new TableCell<User, String>() {
-							
+
 							final ImageView iv = new ImageView("ressources/if_ban_icon.png");
 
 							final JFXButton btn = new JFXButton("", iv);
-							
 
-							
-							
 							@Override
 							public void updateItem(String item, boolean empty) {
-								try {
-									context = new InitialContext();
-								} catch (NamingException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-								try {
-									userService = (UserServiceRemote) context
-											.lookup("iski-ear/iski-ejb/UserService!tn.esprit.blizzard.services.interfaces.UserServiceRemote");
-								} catch (NamingException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-
 								System.out.println("JNDI OK");
 								super.updateItem(item, empty);
 								if (empty) {
@@ -223,7 +210,7 @@ public class AdminPanelController implements Initializable {
 									btn.setOnAction(event -> {
 										User user = getTableView().getItems().get(getIndex());
 										System.out.println(user.getFirstName() + "   " + user.getLastName());
-										userService.remove(user.getIdUser());
+										UserServiceDelegate.deleteUserById(user.getIdUser());
 										Notifications notbuilder = Notifications.create();
 										notbuilder.title("Deleted Successfully ");
 										notbuilder.graphic(null);
@@ -254,14 +241,9 @@ public class AdminPanelController implements Initializable {
 	}
 
 	private ObservableList<User> LoadUserList() throws NamingException {
-
-		context = new InitialContext();
-		userService = (UserServiceRemote) context
-				.lookup("iski-ear/iski-ejb/UserService!tn.esprit.blizzard.services.interfaces.UserServiceRemote");
-
 		System.out.println("JNDI OK");
 
-		userList = FXCollections.observableArrayList(userService.findAll());
+		userList = FXCollections.observableArrayList(UserServiceDelegate.findAllUsers());
 
 		return userList;
 
@@ -269,13 +251,10 @@ public class AdminPanelController implements Initializable {
 
 	private ObservableList<OrganizerRequest> LoadOrganizerRequestList() throws NamingException {
 
-		context = new InitialContext();
-		organizerRequestService = (OrganizerRequestServiceRemote) context.lookup(
-				"iski-ear/iski-ejb/OrganizerRequestService!tn.esprit.blizzard.services.interfaces.OrganizerRequestServiceRemote");
-
 		System.out.println("JNDI OK");
 
-		organizerRequestList = FXCollections.observableArrayList(organizerRequestService.findPendingRequests("Pending"));
+		organizerRequestList = FXCollections
+				.observableArrayList(OrganizerRequestServiceDelegate.findPending("Pending"));
 
 		return organizerRequestList;
 

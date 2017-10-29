@@ -17,6 +17,7 @@ import javax.naming.NamingException;
 import com.jfoenix.controls.JFXButton;
 
 import application.Main;
+import delegate.OrganizerRequestServiceDelegate;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -35,8 +36,7 @@ import tn.esprit.blizzard.services.interfaces.OrganizerRequestServiceRemote;
  */
 public class BecomeOrgController implements Initializable {
 
-	private OrganizerRequestServiceRemote organizerRequestService;
-	private Context context;
+	
 	@FXML
 	private Label lblFilePath;
 	@FXML
@@ -71,9 +71,6 @@ public class BecomeOrgController implements Initializable {
 	@FXML
 	private void onConfirmBtAction(ActionEvent event) throws NamingException {
 		System.out.println("confirm btn clicked");
-		context = new InitialContext();
-		organizerRequestService = (OrganizerRequestServiceRemote) context.lookup(
-				"iski-ear/iski-ejb/OrganizerRequestService!tn.esprit.blizzard.services.interfaces.OrganizerRequestServiceRemote");
 		OrganizerRequest o = new OrganizerRequest();
 		User u = new User();
 		u = Main.getLoggedUser();
@@ -84,7 +81,7 @@ public class BecomeOrgController implements Initializable {
 		String date = new Date().toString();
 		o.setDate(date);
 		System.out.println("UUUUUUxxxxxxxxxxxxx________" + o.getUser().getIdUser());
-		organizerRequestService.add(o);
+		OrganizerRequestServiceDelegate.add(o);
 		((Node) event.getSource()).getScene().getWindow().hide();
 	}
 

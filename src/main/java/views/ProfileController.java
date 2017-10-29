@@ -8,17 +8,13 @@ package views;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import org.controlsfx.control.Notifications;
 
-import com.jfoenix.controls.JFXButton;
-
 import application.Main;
+import delegate.UserServiceDelegate;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -30,17 +26,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import tn.esprit.blizzard.iski.entities.User;
-import tn.esprit.blizzard.services.interfaces.UserServiceRemote;
 
 /**
  * FXML Controller class
@@ -87,6 +77,12 @@ public class ProfileController implements Initializable {
 	 */
 	public void initialize(URL url, ResourceBundle rb) {
 
+		if (Main.getLoggedUser().getUserType().equals("organizer")) {
+			btnBecomeOrgnizer.setDisable(true);
+			btnBecomeOrgnizer.setText("Organizer Account");
+		}
+		txtBirthdate.setDisable(true);
+
 		try {
 
 			this.init(true, false);
@@ -107,15 +103,12 @@ public class ProfileController implements Initializable {
 
 	{
 
-		Context context = new InitialContext();
-		UserServiceRemote userService = (UserServiceRemote) context
-				.lookup("iski-ear/iski-ejb/UserService!tn.esprit.blizzard.services.interfaces.UserServiceRemote");
 		User u = Main.getLoggedUser();
 		u.setEmail(txtEmail.getText());
 		u.setNumber(txtPhonenumber.getText());
 		u.setPassword(pwdPassword.getText());
 
-		userService.update(u);
+		UserServiceDelegate.updateUser(u);
 		Notifications notbuilder = Notifications.create();
 		notbuilder.title("Updated Successfully ");
 		notbuilder.graphic(null);
@@ -144,9 +137,6 @@ public class ProfileController implements Initializable {
 
 	public void init(Boolean val1, Boolean val2) throws NamingException {
 
-		Context context = new InitialContext();
-		UserServiceRemote userService = (UserServiceRemote) context
-				.lookup("iski-ear/iski-ejb/UserService!tn.esprit.blizzard.services.interfaces.UserServiceRemote");
 		User u = Main.getLoggedUser();
 		lblName.setText(u.getFirstName() + " " + u.getLastName());
 		txtPhonenumber.setText(u.getNumber());
@@ -155,7 +145,6 @@ public class ProfileController implements Initializable {
 		txtEmail.setText(u.getEmail());
 
 		txtPhonenumber.setDisable(val1);
-		txtBirthdate.setDisable(true);
 		btnEditConfirm.setVisible(val2);
 		pwdPassword.setVisible(val2);
 		lblPwd.setVisible(val2);
