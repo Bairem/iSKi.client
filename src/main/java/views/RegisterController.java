@@ -13,6 +13,8 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import org.controlsfx.control.Notifications;
+
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXDatePicker;
@@ -23,12 +25,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 import tn.esprit.blizzard.iski.entities.User;
 import tn.esprit.blizzard.services.interfaces.UserServiceRemote;
 
@@ -97,6 +101,17 @@ public class RegisterController implements Initializable {
 			u.setUserType("default");
 
 			u = userService.add(u);
+			
+			
+			Notifications notbuilder = Notifications.create();
+			notbuilder.title("Registration Completed ");
+			notbuilder.graphic(null);
+			notbuilder.hideAfter(Duration.seconds(7));
+			notbuilder.position(Pos.BOTTOM_RIGHT);
+			notbuilder.showConfirm();
+			
+			
+			
 			System.out.println("User added sucessfully " + u.getFirstName() + " with id = " + u.getIdUser());
 			this.onGoToLogin(event);
 

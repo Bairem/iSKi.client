@@ -12,12 +12,15 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import org.controlsfx.control.Notifications;
+
 import com.jfoenix.controls.JFXButton;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableCell;
@@ -25,7 +28,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.util.Callback;
+import javafx.util.Duration;
 import tn.esprit.blizzard.iski.entities.OrganizerRequest;
 import tn.esprit.blizzard.iski.entities.User;
 import tn.esprit.blizzard.services.interfaces.OrganizerRequestServiceRemote;
@@ -114,6 +119,7 @@ public class AdminPanelController implements Initializable {
 						final TableCell<OrganizerRequest, String> cell = new TableCell<OrganizerRequest, String>() {
 							final ImageView iv = new ImageView("ressources/if_ban_icon.png");
 							final ImageView iv1 = new ImageView("ressources/if_accept_103286.png");
+							//HBOX hb = new HBox(btnAccept,btnDecline)
 							final JFXButton btnAccept = new JFXButton("", iv1);
 							
 							final JFXButton btnDecline = new JFXButton("", iv);
@@ -184,12 +190,31 @@ public class AdminPanelController implements Initializable {
 					@Override
 					public TableCell call(final TableColumn<User, String> param) {
 						final TableCell<User, String> cell = new TableCell<User, String>() {
+							
 							final ImageView iv = new ImageView("ressources/if_ban_icon.png");
 
 							final JFXButton btn = new JFXButton("", iv);
+							
 
+							
+							
 							@Override
 							public void updateItem(String item, boolean empty) {
+								try {
+									context = new InitialContext();
+								} catch (NamingException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								try {
+									userService = (UserServiceRemote) context
+											.lookup("iski-ear/iski-ejb/UserService!tn.esprit.blizzard.services.interfaces.UserServiceRemote");
+								} catch (NamingException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+
+								System.out.println("JNDI OK");
 								super.updateItem(item, empty);
 								if (empty) {
 									setGraphic(null);
@@ -199,6 +224,12 @@ public class AdminPanelController implements Initializable {
 										User user = getTableView().getItems().get(getIndex());
 										System.out.println(user.getFirstName() + "   " + user.getLastName());
 										userService.remove(user.getIdUser());
+										Notifications notbuilder = Notifications.create();
+										notbuilder.title("Deleted Successfully ");
+										notbuilder.graphic(null);
+										notbuilder.hideAfter(Duration.seconds(7));
+										notbuilder.position(Pos.BOTTOM_RIGHT);
+										notbuilder.showConfirm();
 										initUserTab();
 
 									});
