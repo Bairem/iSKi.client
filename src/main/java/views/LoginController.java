@@ -17,6 +17,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
+import application.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -73,7 +74,12 @@ public class LoginController implements Initializable {
 			} else {
 				System.out.println("User password from DB : " + u.getPassword());
 				if (txt_password.getText().equals(u.getPassword())) {
-					System.out.println("3okkkeeyy");
+					Main.setLoggedUser(u);
+					if (u.getUserType().equals("admin")) {
+						this.goToAdminPanel(event);
+					} else {
+						this.goToHome(event);
+					}
 				} else {
 					System.out.println("tyh ma 9olna rou7");
 				}
@@ -109,6 +115,51 @@ public class LoginController implements Initializable {
 			e.printStackTrace();
 		}
 		System.out.println("b");
+
+	}
+
+	private void goToHome(ActionEvent event) {
+
+		try {
+			((Node) event.getSource()).getScene().getWindow().hide();
+			Stage primaryStage = new Stage();
+			FXMLLoader loader = new FXMLLoader();
+			Pane root;
+			root = FXMLLoader.load(getClass().getResource("../views/Home.fxml"));
+
+			primaryStage.initStyle(StageStyle.DECORATED);
+
+			Scene scene = new Scene(root);
+			primaryStage.setTitle("iSKi Desktop Application");
+			primaryStage.setScene(scene);
+			primaryStage.show();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+	
+	
+	private void goToAdminPanel(ActionEvent event) {
+
+		try {
+			((Node) event.getSource()).getScene().getWindow().hide();
+			Stage primaryStage = new Stage();
+			FXMLLoader loader = new FXMLLoader();
+			Pane root;
+			root = FXMLLoader.load(getClass().getResource("../views/adminPanel.fxml"));
+
+			primaryStage.initStyle(StageStyle.DECORATED);
+
+			Scene scene = new Scene(root);
+			primaryStage.setTitle("iSKi Admin Panel");
+			primaryStage.setScene(scene);
+			primaryStage.show();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 

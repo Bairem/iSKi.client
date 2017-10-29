@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="300.0" minWidth="300.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.BecomeOrgController">
+   <children>
+      <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Submit your resume and become and organizer ! " textFill="#00718a" VBox.vgrow="ALWAYS">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </Label>
+      <TextArea maxHeight="100.0" text="By becoming an organizer , you'll be able to create  new events and join our community.&#10;Your profile will be checked by our team to whether approve or decline your request ! we will keep you updated.&#10;Limit resume file size (500KO)" wrapText="true" />
+      <HBox alignment="TOP_CENTER" prefHeight="40.0">
+         <children>
+            <Label contentDisplay="TOP" text="iSKi Team" textFill="#00718a">
+               <graphic>
+                  <ImageView fitHeight="100.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../ressources/logo.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <Separator prefWidth="200.0" />
+      <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+         <children>
+            <Label fx:id="lblFilePath" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="..." HBox.hgrow="ALWAYS">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Separator orientation="VERTICAL" />
+            <JFXButton fx:id="btnSelectFile" maxHeight="1.7976931348623157E308" minWidth="80.0" onAction="#onSelectFileBtAction" text="Select file" HBox.hgrow="ALWAYS">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </HBox>
+      <Separator prefWidth="200.0" />
+      <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+         <children>
+            <JFXButton fx:id="btnConfirm" maxHeight="1.7976931348623157E308" onAction="#onConfirmBtAction" text="Confirm" textFill="#00718a" HBox.hgrow="ALWAYS">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </JFXButton>
+            <Region maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+            <JFXButton fx:id="btnCancel" maxHeight="1.7976931348623157E308" onAction="#OnCancelBtAction" text="Cancel" textFill="#c9050e">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </HBox>
+   </children>
+</VBox>

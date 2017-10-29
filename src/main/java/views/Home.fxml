@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.HomeController">
+   <children>
+      <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #fff;">
+         <children>
+            <Text fill="#00718a" strokeType="OUTSIDE" strokeWidth="0.0" text="iSKi" textAlignment="CENTER" wrappingWidth="161.126953125" HBox.hgrow="ALWAYS">
+               <font>
+                  <Font name="System Bold Italic" size="14.0" />
+               </font>
+            </Text>
+            <Region maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+            <Label fx:id="lblLoggedUser" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="23.0" prefWidth="129.0" text="Logged AS" textFill="#00718af7">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <Separator prefWidth="200.0" />
+      <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #fff;" VBox.vgrow="ALWAYS">
+         <children>
+            <VBox maxHeight="1.7976931348623157E308" maxWidth="180.0" spacing="15.0" style="-fx-background-color: #fff;" HBox.hgrow="ALWAYS">
+               <children>
+                  <JFXButton fx:id="btnHome" alignment="TOP_LEFT" graphicTextGap="25.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="side-buttons" text="Home" textFill="#757575" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font name="Roboto Medium" size="13.0" />
+                     </font>
+                     <graphic>
+                        <FontAwesomeIconView fill="#757575" glyphName="DASHBOARD" size="16.0" />
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="btnProfile" alignment="TOP_LEFT" graphicTextGap="25.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#profileBtAction" styleClass="side-buttons" text="Profile" textFill="#757575" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font name="Roboto Medium" size="13.0" />
+                     </font>
+                     <graphic>
+                        <FontAwesomeIconView fill="#757575" glyphName="EYE" size="20" />
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="btnHealthIns" alignment="TOP_LEFT" graphicTextGap="25.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="side-buttons" text="Health Insurance" textFill="#757575" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font name="Roboto Medium" size="13.0" />
+                     </font>
+                     <graphic>
+                        <FontAwesomeIconView fill="#757575" glyphName="PLUS_SQUARE" size="20" />
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="btnAccomodation" alignment="TOP_LEFT" graphicTextGap="25.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="side-buttons" text="Accomodation" textFill="#757575" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font name="Roboto Medium" size="13.0" />
+                     </font>
+                     <graphic>
+                        <FontAwesomeIconView fill="#757575" glyphName="HOME" size="20" />
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="btnShop" alignment="TOP_LEFT" graphicTextGap="30.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="side-buttons" text="Shop" textFill="#757575" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font name="Roboto Medium" size="13.0" />
+                     </font>
+                     <graphic>
+                        <FontAwesomeIconView fill="#757575" glyphName="DOLLAR" size="20" />
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="btnExchange" alignment="TOP_LEFT" graphicTextGap="25.0" layoutX="10.0" layoutY="236.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="side-buttons" text="Exchange" textFill="#757575" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font name="Roboto Medium" size="13.0" />
+                     </font>
+                     <graphic>
+                        <FontAwesomeIconView fill="#757575" glyphName="SIGN_OUT" size="16.0" />
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="btnEvents" alignment="TOP_LEFT" graphicTextGap="25.0" layoutX="10.0" layoutY="144.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="side-buttons" text="Events" textFill="#757575" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font name="Roboto Medium" size="13.0" />
+                     </font>
+                     <graphic>
+                        <FontAwesomeIconView fill="#757575" glyphName="EYE" size="20" />
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="btnLogout" alignment="TOP_LEFT" graphicTextGap="25.0" layoutX="10.0" layoutY="222.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#logoutBtAction" styleClass="side-buttons" text="Logout" textFill="#757575" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font name="Roboto Medium" size="13.0" />
+                     </font>
+                     <graphic>
+                        <FontAwesomeIconView fill="#757575" glyphName="CLOSE" size="20" />
+                     </graphic>
+                  </JFXButton>
+               </children>
+               <padding>
+                  <Insets bottom="16.0" top="16.0" />
+               </padding>
+            </VBox>
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
+            <ScrollPane fx:id="spCentral" fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #fff;" HBox.hgrow="ALWAYS" />
+         </children>
+      </HBox>
+   </children>
+</VBox>

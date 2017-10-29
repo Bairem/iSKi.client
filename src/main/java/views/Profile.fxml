@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDialog?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.ProfileController">
+   <children>
+      <VBox alignment="TOP_CENTER" style="-fx-background-color: #fff;">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" VBox.vgrow="NEVER">
+               <image>
+                  <Image url="@../icons/background.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="lblName" alignment="CENTER" maxWidth="1.7976931348623157E308" minHeight="50.0" text="Logged Username" textFill="#00718a" VBox.vgrow="ALWAYS">
+               <font>
+                  <Font name="System Bold Italic" size="18.0" />
+               </font>
+            </Label>
+            <VBox VBox.vgrow="ALWAYS">
+               <children>
+                  <VBox alignment="TOP_CENTER" prefHeight="85.0" prefWidth="221.0" VBox.vgrow="ALWAYS">
+                     <children>
+                        <JFXButton fx:id="btnEditProfile" maxHeight="30.0" maxWidth="1.7976931348623157E308" onAction="#EditOnAction" text="Edit Profile" textFill="#00718a" VBox.vgrow="ALWAYS">
+                           <font>
+                              <Font name="System Bold Italic" size="14.0" />
+                           </font>
+                        </JFXButton>
+                        <Label fx:id="lblEmail" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Email" textFill="#797878" VBox.vgrow="ALWAYS">
+                           <font>
+                              <Font name="Roboto Regular" size="14.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#404bb6" glyphName="ENVELOPE" nodeOrientation="RIGHT_TO_LEFT" size="16.0" wrappingWidth="28.0" />
+                           </graphic>
+                        </Label>
+                        <JFXTextField fx:id="txtEmail" prefHeight="25.0" prefWidth="253.0" />
+                        <Label fx:id="lblPhone" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="phone Number" textFill="#797878" VBox.vgrow="ALWAYS">
+                           <font>
+                              <Font name="Roboto Regular" size="14.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#404bb6" glyphName="PHONE" nodeOrientation="RIGHT_TO_LEFT" size="16.0" wrappingWidth="28.0" />
+                           </graphic>
+                        </Label>
+                        <JFXTextField fx:id="txtPhonenumber" />
+                        <Label fx:id="lblBirthdate" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Birthdate" textFill="#797878" VBox.vgrow="ALWAYS">
+                           <font>
+                              <Font name="Roboto Regular" size="14.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#404bb6" glyphName="MAP_MARKER" nodeOrientation="RIGHT_TO_LEFT" size="16.0" wrappingWidth="28.0" />
+                           </graphic>
+                        </Label>
+                        <JFXTextField fx:id="txtBirthdate" />
+                        <Label fx:id="lblPwd" layoutX="10.0" layoutY="250.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="password" textFill="#797878" VBox.vgrow="ALWAYS">
+                           <font>
+                              <Font name="Roboto Regular" size="14.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#404bb6" glyphName="" nodeOrientation="RIGHT_TO_LEFT" size="16.0" text="" wrappingWidth="28.0" />
+                           </graphic>
+                        </Label>
+                        <JFXPasswordField fx:id="pwdPassword" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS" />
+                        <JFXButton fx:id="btnEditConfirm" maxHeight="30.0" maxWidth="1.7976931348623157E308" onAction="#ConfirmEditOnAction" text="Confirm" textFill="#00718a">
+                           <font>
+                              <Font name="System Bold Italic" size="14.0" />
+                           </font>
+                           <padding>
+                              <Insets top="25.0" />
+                           </padding>
+                        </JFXButton>
+                        <JFXButton fx:id="btnBecomeOrgnizer" maxHeight="30.0" maxWidth="1.7976931348623157E308" onAction="#BecomeOrganizerOnAction" text="Become an Organizer" textFill="#00718a" VBox.vgrow="ALWAYS">
+                           <font>
+                              <Font name="System Bold Italic" size="14.0" />
+                           </font>
+                           <padding>
+                              <Insets top="25.0" />
+                           </padding>
+                        </JFXButton>
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+      <Separator orientation="VERTICAL" prefHeight="200.0" />
+      <TabPane fx:id="tpProfile" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" tabClosingPolicy="UNAVAILABLE" HBox.hgrow="ALWAYS">
+        <tabs>
+          <Tab text="Events">
+               <content>
+                  <HBox fx:id="hbEvents" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                     <children>
+                        <JFXDialog />
+                     </children>
+                  </HBox>
+               </content>
+            </Tab>
+          <Tab text="Insurance Contract">
+               <content>
+                  <VBox fx:id="vbInsurance" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+               </content>
+            </Tab>
+            <Tab text="Materials">
+              <content>
+                  <ScrollPane fitToHeight="true" fitToWidth="true">
+                     <content>
+                        <VBox fx:id="vbMaterials" />
+                     </content>
+                  </ScrollPane>
+              </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</HBox>
